@@ -1,0 +1,13 @@
+*~
+.DS_Store
+.vimrc.local
+.pryrc
+.solargraph.yml
+.envrc
+*.code-workspace
+*.local.tfvars
+
+.my_prompts
+
+.serena
+

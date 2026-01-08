@@ -1,0 +1,7 @@
+abbr "kc"="kubectx | peco | xargs kubectx"
+abbr "kn"="kubens | peco | xargs kubens"
+abbr "l1"="ls -1"
+abbr "la"="ls -a"
+abbr "la1"="ls -1a"
+abbr "ll"="ls -l"
+abbr "lla"="ls -la"

@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+*.swp
+*.swo
+*~
+
+# Backup files
+*.backup
+*.bak
+
+# README and documentation (not needed in home directory)
+README.md
+CLAUDE.md
+LICENSE

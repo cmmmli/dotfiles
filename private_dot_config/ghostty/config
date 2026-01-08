@@ -1,0 +1,31 @@
+# ===== Appearance =====
+theme = TokyoNight
+
+# Cursor と統一
+# font-family = CaskaydiaMono Nerd Font
+font-family = PlemolJP35 Console NF
+font-size = 14
+
+# 視認性と一体感
+background-opacity = 0.9
+background-blur = true
+maximize = true
+
+# ===== Readability (optional but recommended) =====
+# 文字が細く感じたら効く
+font-thicken = true
+
+# 行が詰まって見えたら 1 に
+adjust-cell-height = 1
+
+# ===== Navigation / UX =====
+window-inherit-working-directory = true
+shell-integration = detect
+
+# ===== Split create =====
+keybind = ctrl+shift+l=new_split:right
+
+# ===== Split move =====
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+l=goto_split:right
+

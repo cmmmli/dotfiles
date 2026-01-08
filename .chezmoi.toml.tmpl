@@ -1,0 +1,10 @@
+{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $name := promptStringOnce . "name" "Full name" -}}
+{{- $isWork := promptBoolOnce . "isWork" "Is this a work machine" -}}
+
+sourceDir = "/Users/{{ .chezmoi.username }}/dev/src/github.com/cmmmli/dotfiles"
+
+[data]
+    email = {{ $email | quote }}
+    name = {{ $name | quote }}
+    isWork = {{ $isWork }}

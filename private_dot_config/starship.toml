@@ -1,0 +1,25 @@
+# エディターの補完を設定スキーマに合わせて取得
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# シェルのプロンプトの間に空行を挿入する
+add_newline = true
+
+format='''
+$kubernetes $gcloud
+$directory$git_branch$git_commit$git_status
+$time$character
+'''
+
+# right_format='$kubernetes$gcloud'
+
+[time]
+time_format = '%H:%M'
+disabled = false
+
+[kubernetes]
+format = 'on [⛵ $context \($namespace\)]($style) '
+style = "bold green"
+disabled = false
+
+[gcloud]
+format = 'on [$symbol$account(@$domain)]($style)'
