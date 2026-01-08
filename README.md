@@ -14,9 +14,7 @@ git clone https://github.com/cmmmli/dotfiles ~/dev/src/github.com/cmmmli/dotfile
 
 # chezmoi 設定
 mkdir -p ~/.config/chezmoi
-cat > ~/.config/chezmoi/chezmoi.toml << 'EOF'
-sourceDir = "/Users/$(whoami)/dev/src/github.com/cmmmli/dotfiles"
-EOF
+echo "sourceDir = \"$HOME/dev/src/github.com/cmmmli/dotfiles\"" > ~/.config/chezmoi/chezmoi.toml
 
 # 適用（初回は対話的に name, email, isWork を入力）
 chezmoi apply
