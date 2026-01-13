@@ -89,6 +89,14 @@ bindkey '^R' history-incremental-pattern-search-backward
 ########################################
 # エイリアス
 
+# eza (モダンな ls 代替)
+if (( $+commands[eza] )); then
+  alias ls='eza --icons --group-directories-first'
+  alias ll='eza --icons --group-directories-first -l'
+  alias la='eza --icons --group-directories-first -la'
+  alias lt='eza --icons --group-directories-first -T'  # tree表示
+fi
+
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
