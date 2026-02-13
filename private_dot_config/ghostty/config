@@ -29,3 +29,11 @@ keybind = ctrl+shift+l=new_split:right
 keybind = ctrl+h=goto_split:left
 keybind = ctrl+l=goto_split:right
 
+# ===== Split resize (Alt) =====
+# 既存のリサイズ設定...
+keybind = alt+h=resize_split:left,20
+keybind = alt+l=resize_split:right,20
+
+# 均等に戻す (Equalize)
+keybind = alt+equal=equalize_splits
+

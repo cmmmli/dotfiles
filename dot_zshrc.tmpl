@@ -190,3 +190,6 @@ tre() { command tre "$@" -e vim && source "/tmp/tre_aliases_$USER" 2>/dev/null; 
 
 # Added by Antigravity
 export PATH="{{ .chezmoi.homeDir }}/.antigravity/antigravity/bin:$PATH"
+export XDG_CONFIG_HOME="$HOME/.config"
+
+eval "$(git wt --init zsh)"

@@ -36,6 +36,27 @@ chezmoi diff
 chezmoi cd
 ```
 
+## Homebrew パッケージの追加
+
+```bash
+# 1. Brewfile を編集
+chezmoi edit ~/.Brewfile
+
+# 2. パッケージを追加（例）
+# brew "ripgrep"
+# cask "visual-studio-code"
+# vscode "ms-python.python"
+
+# 3. 変更を適用（brew bundle が自動実行される）
+chezmoi apply
+```
+
+Brewfile の書き方:
+- `brew "package"` - CLI ツール
+- `cask "app"` - GUI アプリ
+- `vscode "extension"` - VSCode 拡張
+- `mas "App Name", id: 123456` - Mac App Store アプリ
+
 ## 含まれる設定
 
 | ファイル | 説明 |
