@@ -1,0 +1,35 @@
+# ~/.config/mise/config.toml — グローバルのツール定義
+#
+# 方針:
+#   - 言語ランタイムと「バージョンを固定したい CLI」はここで管理する
+#   - 汎用 CLI / cask / コンパイル物は ~/.Brewfile (Homebrew)
+#   - プロジェクト固有のバージョンは各リポジトリの mise.toml / .mise.toml が優先される
+#
+# 反映: chezmoi apply (run_onchange_mise-install.sh が `mise install` を実行)
+# 更新: mise upgrade / mise outdated
+
+[tools]
+# --- language runtimes ---
+node = "lts"
+python = "3.13"
+go = "latest"
+bun = "latest"
+pnpm = "latest"
+
+# --- IaC ---
+terraform = "latest"
+
+# --- Kubernetes ---
+kubectl = "latest"
+helm = "latest"
+kubectx = "latest"
+kubens = "latest"
+minikube = "latest"
+skaffold = "latest"
+
+# --- GitHub Actions ---
+actionlint = "latest"
+
+[settings]
+# .node-version / .python-version も読む (mise 2025+ はデフォルト無効)
+idiomatic_version_file_enable_tools = ["node", "python"]

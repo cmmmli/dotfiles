@@ -20,8 +20,8 @@ filetype plugin indent on
 " Required for operations modifying multiple buffers like rename.
 set hidden
 
+" 言語サーバは必要になったらここに追加 (例: 'go': ['gopls'])
 let g:LanguageClient_serverCommands = {
-    \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
     \ }
 
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>

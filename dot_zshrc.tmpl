@@ -13,17 +13,13 @@ export EDITOR=vim
 export PAGER=less
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-# Go
+# Go (go 本体は mise 管理。GOROOT は go 自身が解決するので設定しない)
 export GOPATH="$HOME/dev"
-export GOROOT="$(go env GOROOT)"
 
-# Version managers
-export VOLTA_HOME="$HOME/.volta"
-export PYENV_ROOT="$HOME/.pyenv"
 export PGDATA='/usr/local/var/postgres'
 
-# aqua
-export AQUA_GLOBAL_CONFIG=$HOME/.config/aqua.yaml
+# ランタイム / pin したい CLI は mise (~/.config/mise/config.toml) で管理。
+# aqua は仕事リポジトリの aqua.yaml 用にバイナリだけ残す (グローバル設定は持たない)
 export AQUA_PROGRESS_BAR=true
 
 ########################################
@@ -35,12 +31,8 @@ path=(
     $HOME/bin(N-/)
     $HOME/.yarn/bin(N-/)
 
-    # Version managers
-    $VOLTA_HOME/bin(N-/)
-    $PYENV_ROOT/bin(N-/)
-    $PYENV_ROOT/shims(N-/)
-    $HOME/.rbenv/shims(N-/)
-    $(aqua root-dir)/bin(N-/)
+    # aqua (project-level aqua.yaml が入れるバイナリの置き場)
+    ${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua/bin(N-/)
 
     # Kubernetes
     ${KREW_ROOT:-$HOME/.krew}/bin(N-/)
@@ -70,24 +62,9 @@ path=(
     /usr/local/opt/krb5/sbin(N-/)
     /usr/local/aws/bin(N-/)
 
-    # Applications
-    /Applications/Alacritty.app/Contents/MacOS(N-/)
-
     # System
     $path
 )
-
-########################################
-# rbenv: 遅延初期化 (初回呼び出し時にフル初期化)
-if (( $+commands[rbenv] )); then
-  rbenv() {
-    unfunction rbenv
-    eval "$(command rbenv init -)"
-    rbenv "$@"
-  }
-fi
-
-# eval "$(zellij setup --generate-auto-start zsh)"
 
 setopt magic_equal_subst
 
@@ -134,24 +111,11 @@ else
 fi
 autoload -U +X bashcompinit && bashcompinit
 
-# pyenv: 遅延初期化 (初回呼び出し時にフル初期化)
-# PATH は上部で設定済み
-if (( $+commands[pyenv] )); then
-  pyenv() {
-    unfunction pyenv
-    eval "$(command pyenv init -)"
-    pyenv "$@"
-  }
-fi
-
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
 # tabtab source for packages
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
-
-
-export VOLTA_FEATURE_PNPM=1
 
 # pnpm
 export PNPM_HOME="{{ .chezmoi.homeDir }}/Library/pnpm"
@@ -184,12 +148,14 @@ if [ -f '{{ .chezmoi.homeDir }}/google-cloud-sdk/completion.zsh.inc' ]; then . '
 alias gwt='cd "$(git worktree list | peco | awk "{print \$1}")"'
 eval "$(mise activate zsh)"
 
-complete -o nospace -C {{ .chezmoi.homeDir }}/.local/share/aquaproj-aqua/pkgs/http/releases.hashicorp.com/terraform/1.7.5/terraform_1.7.5_darwin_arm64.zip/terraform terraform
-
-tre() { command tre "$@" -e vim && source "/tmp/tre_aliases_$USER" 2>/dev/null; }
+# terraform (mise 管理) の補完。PATH 上の terraform を補完時に解決する
+complete -o nospace -C terraform terraform
 
 # Added by Antigravity
 export PATH="{{ .chezmoi.homeDir }}/.antigravity/antigravity/bin:$PATH"
 export XDG_CONFIG_HOME="$HOME/.config"
 
 eval "$(git wt --init zsh)"
+
+# bun completions
+[ -s "{{ .chezmoi.homeDir }}/.bun/_bun" ] && source "{{ .chezmoi.homeDir }}/.bun/_bun"
