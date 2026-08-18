@@ -69,6 +69,7 @@ Brewfile の書き方:
 
 | ファイル | 説明 |
 |---------|------|
+| `.zprofile` | login shell 用 (Homebrew shellenv, mise shims) |
 | `.zshrc` | zsh メイン設定 |
 | `.gitconfig` | Git 設定 |
 | `.vimrc` | Vim 設定 |

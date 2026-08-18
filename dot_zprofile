@@ -1,0 +1,10 @@
+# ~/.zprofile — login shell で読まれる
+#   (Ghostty / Terminal の新規ウィンドウ、IDE や Claude Code が環境変数を解決するときの `zsh -l` など)
+# 対話 shell 向けの設定 (alias, prompt, 補完) は ~/.zshrc に置く
+
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# mise: 非対話 shell (IDE のタスク, hook, GUI アプリ経由の起動) でもツールが見えるように shims を PATH に通す。
+# 対話 shell では ~/.zshrc の `mise activate zsh` が優先され、shims より前に実体のパスが入る
+eval "$(mise activate zsh --shims)"

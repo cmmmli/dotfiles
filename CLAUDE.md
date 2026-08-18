@@ -57,6 +57,7 @@ Note: chezmoi applies entries in alphabetical order of target path, and `.chezmo
 
 | Source | Target | Purpose |
 |--------|--------|---------|
+| `dot_zprofile` | `~/.zprofile` | Login-shell config: Homebrew shellenv + mise shims (so non-interactive shells / IDEs see mise tools) |
 | `dot_zshrc.tmpl` | `~/.zshrc` | Main shell config with PATH, aliases, lazy-loading |
 | `dot_Brewfile` | `~/.Brewfile` | Homebrew: casks, compiled tools, general-purpose CLIs |
 | `private_dot_config/mise/config.toml` | `~/.config/mise/config.toml` | mise: language runtimes and version-pinned CLIs (node, python, go, terraform, kubectl, ...) |
