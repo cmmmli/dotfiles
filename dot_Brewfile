@@ -66,6 +66,15 @@ brew "uv"
 brew "biome"
 
 # ---------------------------------------------------------------------------
+# container (colima = VM + Docker Engine, docker = CLI, compose/buildx = CLI プラグイン)
+#   プラグインは ~/.docker/cli-plugins/ のシンボリックリンク (chezmoi 管理) で docker から見える
+# ---------------------------------------------------------------------------
+brew "colima"
+brew "docker"
+brew "docker-compose"
+brew "docker-buildx"
+
+# ---------------------------------------------------------------------------
 # tool managers
 # ---------------------------------------------------------------------------
 brew "chezmoi"
