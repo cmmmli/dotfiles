@@ -79,6 +79,7 @@ Brewfile の書き方:
 | `.config/ghostty/` | Ghostty ターミナル |
 | `.config/karabiner/` | キーリマップ |
 | `.Brewfile` | Homebrew パッケージ |
+| `.docker/cli-plugins/` | docker compose / buildx プラグインへのシンボリックリンク（brew の `lib/docker/cli-plugins` を指す） |
 | `.config/mise/config.toml` | mise で管理するランタイム / CLI |
 
 ## 自動スクリプト
