@@ -10,17 +10,18 @@ macOS 用の dotfiles。[chezmoi](https://www.chezmoi.io/) で管理。
 # chezmoi インストール
 brew install chezmoi
 
-# リポジトリをクローン（GOPATH スタイル）
+# リポジトリをクローン（GOPATH スタイル。.chezmoi.toml.tmpl がこのパスを sourceDir として書き込むので、別の場所に clone した場合はここへ移動する）
 mkdir -p ~/dev/src/github.com/cmmmli
 git clone https://github.com/cmmmli/dotfiles ~/dev/src/github.com/cmmmli/dotfiles
 
-# chezmoi 設定
-mkdir -p ~/.config/chezmoi
-echo "sourceDir = \"$HOME/dev/src/github.com/cmmmli/dotfiles\"" > ~/.config/chezmoi/chezmoi.toml
+# chezmoi 設定を生成（対話的に name, email, isWork を入力。sourceDir も一緒に書き込まれる）
+chezmoi init --source ~/dev/src/github.com/cmmmli/dotfiles
 
-# 適用（初回は対話的に name, email, isWork を入力）
-# → Brewfile の brew bundle、mise install、補完キャッシュ生成まで自動で走る
+# 差分確認 → 適用
+# → 00: Brewfile の tap trust + brew bundle、10: mise install、20: 補完キャッシュ生成まで自動で走る
+chezmoi diff
 chezmoi apply
+exec zsh
 ```
 
 ## 日常的な使い方
