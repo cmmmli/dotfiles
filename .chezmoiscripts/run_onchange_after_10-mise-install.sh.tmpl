@@ -1,0 +1,17 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# mise config hash: {{ include "private_dot_config/mise/config.toml" | sha256sum }}
+
+# mise は Brewfile 経由で入る (00-brew-bundle.sh が先に実行される)。
+# run_onchange_after_ なので ~/.config/mise/config.toml が書かれた後に走る
+if ! command -v mise >/dev/null 2>&1; then
+  echo "Warning: mise not found. Skipping mise install." >&2
+  exit 0
+fi
+
+echo "Installing mise tools..."
+MISE_YES=1 mise install || {
+    echo "Warning: Some mise tools failed to install. Run 'mise install' manually."
+    exit 0
+}
+{{ end -}}

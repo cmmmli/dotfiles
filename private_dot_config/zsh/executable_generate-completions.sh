@@ -5,6 +5,9 @@
 
 set -e
 
+# brew / mise 管理のツールが見えるように PATH を補う (非対話 shell のため)
+export PATH="${HOME}/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:$PATH"
+
 CACHE_DIR="${HOME}/.zfunc"
 mkdir -p "$CACHE_DIR"
 
@@ -32,6 +35,12 @@ fi
 if command -v op &> /dev/null; then
   echo "  - op"
   op completion zsh > "$CACHE_DIR/_op"
+fi
+
+# mise
+if command -v mise &> /dev/null; then
+  echo "  - mise"
+  mise completion zsh > "$CACHE_DIR/_mise"
 fi
 
 echo "Done! Completions cached in $CACHE_DIR"

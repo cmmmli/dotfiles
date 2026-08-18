@@ -45,23 +45,27 @@ Defined in `.chezmoi.toml.tmpl` and prompted on first run:
 
 ### Automatic Scripts (`.chezmoiscripts/`)
 
-- `run_onchange_brew-bundle.sh.tmpl` - Runs `brew bundle` when `dot_Brewfile` changes (uses hash in comment)
-- `run_after_generate-completions.sh.tmpl` - Generates zsh completion cache after each apply
+All scripts are `after_` scripts (run once every file has been applied) and execute in numeric-prefix order:
+
+- `run_onchange_after_00-brew-bundle.sh.tmpl` - Trusts the taps listed in the Brewfile (`brew trust --tap`, required by Homebrew 6+) and runs `brew bundle` when `dot_Brewfile` changes (uses hash in comment)
+- `run_onchange_after_10-mise-install.sh.tmpl` - Runs `mise install` when `private_dot_config/mise/config.toml` changes (same hash trick)
+- `run_after_20-generate-completions.sh.tmpl` - Generates zsh completion cache after each apply
+
+Note: chezmoi applies entries in alphabetical order of target path, and `.chezmoiscripts/...` sorts before `.config/...`, so plain `run_onchange_` scripts would run before their config files are written. Keep them `after_`.
 
 ## Key Configuration Files
 
 | Source | Target | Purpose |
 |--------|--------|---------|
 | `dot_zshrc.tmpl` | `~/.zshrc` | Main shell config with PATH, aliases, lazy-loading |
-| `dot_Brewfile` | `~/.Brewfile` | Homebrew packages, casks, VSCode extensions |
+| `dot_Brewfile` | `~/.Brewfile` | Homebrew: casks, compiled tools, general-purpose CLIs |
+| `private_dot_config/mise/config.toml` | `~/.config/mise/config.toml` | mise: language runtimes and version-pinned CLIs (node, python, go, terraform, kubectl, ...) |
 | `private_dot_config/sheldon/plugins.toml` | `~/.config/sheldon/plugins.toml` | zsh plugin manager |
 | `private_dot_config/starship.toml` | `~/.config/starship.toml` | Prompt theme |
-| `private_dot_config/aqua.yaml` | `~/.config/aqua.yaml` | CLI tool versions |
 
-## Version Managers
+## Tool Management Policy
 
-- **Volta** - Node.js (`~/.volta`)
-- **pyenv** - Python (`~/.pyenv`)
-- **rbenv** - Ruby
-- **aqua** - CLI tools (`~/.config/aqua.yaml`)
-- **mise** - Multi-language runtime manager
+- **Homebrew** (`dot_Brewfile`) - casks, compiled tools (git, zsh, neovim, php, postgresql), general-purpose CLIs that can always be latest (bat, fd, jq, gh, ...)
+- **mise** (`private_dot_config/mise/config.toml`) - language runtimes (node, python, go, bun, pnpm) and CLIs whose version matters per project (terraform, kubectl, helm, k9s, ...). Project-level `mise.toml` / `.mise.toml` overrides the global config.
+- **aqua** - binary only, for work repositories that ship their own `aqua.yaml`. No global aqua config.
+- Volta / pyenv / rbenv are no longer used.

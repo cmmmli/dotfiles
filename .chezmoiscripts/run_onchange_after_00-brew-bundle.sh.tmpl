@@ -1,0 +1,17 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Brewfile hash: {{ include "dot_Brewfile" | sha256sum }}
+
+BREWFILE="{{ .chezmoi.homeDir }}/.Brewfile"
+
+# Homebrew 6 以降、third-party tap の formula / cask は明示的に trust しないと読み込めない
+grep -E '^tap ' "$BREWFILE" | cut -d'"' -f2 | while read -r tap; do
+  brew trust --tap "$tap" >/dev/null 2>&1 || echo "Warning: failed to trust tap: $tap" >&2
+done
+
+echo "Installing Homebrew packages..."
+brew bundle --file="$BREWFILE" || {
+    echo "Warning: Some packages failed to install. Check Brewfile for issues."
+    exit 0
+}
+{{ end -}}
