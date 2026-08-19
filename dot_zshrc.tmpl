@@ -144,6 +144,10 @@ if [ -f '{{ .chezmoi.homeDir }}/google-cloud-sdk/completion.zsh.inc' ]; then . '
 alias gwt='cd "$(git worktree list | peco | awk "{print \$1}")"'
 eval "$(mise activate zsh)"
 
+# chezmoi 管理フローを迂回する brew/mise 操作に確認を挟む
+# (mise activate が mise 関数を定義した後に読み込む必要がある)
+source {{ .chezmoi.homeDir }}/.config/zsh/chezmoi-guard.zsh
+
 # terraform (mise 管理) の補完。PATH 上の terraform を補完時に解決する
 complete -o nospace -C terraform terraform
 
