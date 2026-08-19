@@ -63,6 +63,31 @@ Note: chezmoi applies entries in alphabetical order of target path, and `.chezmo
 | `private_dot_config/mise/config.toml` | `~/.config/mise/config.toml` | mise: language runtimes and version-pinned CLIs (node, python, go, terraform, kubectl, ...) |
 | `private_dot_config/sheldon/plugins.toml` | `~/.config/sheldon/plugins.toml` | zsh plugin manager |
 | `private_dot_config/starship.toml` | `~/.config/starship.toml` | Prompt theme |
+| `private_dot_claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Claude Code: global instructions |
+| `private_dot_claude/executable_statusline-command.sh` | `~/.claude/statusline-command.sh` | Claude Code: status line renderer |
+| `private_dot_codex/AGENTS.md` | `~/.codex/AGENTS.md` | Codex: global instructions |
+
+## Coding Agent Config (`~/.claude`, `~/.codex`)
+
+Only the **hand-written, non-secret** files are managed. Everything else in those
+directories is deliberately left unmanaged:
+
+| Not managed | Why |
+|-------------|-----|
+| `~/.claude/settings.json` | Claude Code rewrites it constantly (`permissions.allow` grows on every approval, `enabledPlugins`, `feedbackSurveyState`). Its `autoMode.environment` block also holds work-internal GCP project IDs, hostnames, bucket names, and CI secret names — this repo is public. |
+| `~/.codex/config.toml` | Codex appends `[projects."..."] trust_level` on every new directory, plus `marketplaces.last_updated`, `tui.model_availability_nux`, `desktop.*`. Same work-internal path leakage. |
+| `~/.codex/rules/default.rules` | An append-only approval log written by Codex, full of one-off command history. |
+| `~/.codex/auth.json` | Credentials. |
+| `sessions/`, `history.jsonl`, `*.sqlite`, `plugins/`, `cache/`, `skills/` | Runtime state, caches, and tool-installed content. |
+| `~/.claude/commands/` | Slash commands belong to the repository they act on, so they live in that repo's own `.claude/commands/` — which also keeps private repository names out of this public repo. |
+
+chezmoi is one-way (source → target), so managing an app-rewritten file would make
+`chezmoi diff` permanently dirty and let `chezmoi apply` revert the app's own writes.
+Partial management would require `modify_` scripts that merge via jq — deliberately
+not done.
+
+Note `~/.claude/hooks/herdr-agent-state.sh` is installed by herdr itself, so it is not
+managed here either.
 
 ## Tool Management Policy
 
