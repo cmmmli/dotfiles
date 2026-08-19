@@ -70,3 +70,25 @@ Note: chezmoi applies entries in alphabetical order of target path, and `.chezmo
 - **mise** (`private_dot_config/mise/config.toml`) - language runtimes (node, python, go, bun, pnpm) and CLIs whose version matters per project (terraform, kubectl, helm, k9s, ...). Project-level `mise.toml` / `.mise.toml` overrides the global config.
 - **aqua** - binary only, for work repositories that ship their own `aqua.yaml`. No global aqua config.
 - Volta / pyenv / rbenv are no longer used.
+
+## Bypass Guard
+
+`private_dot_config/zsh/chezmoi-guard.zsh` wraps `brew` and `mise` so that operations
+which bypass the chezmoi flow ask for confirmation first:
+
+| Command | Canonical route |
+|---------|-----------------|
+| `brew install` / `uninstall` / `remove` / `rm` / `tap` / `untap` | `chezmoi edit ~/.Brewfile` → `chezmoi apply` |
+| `mise use -g` / `mise use --global` / `mise global` | `chezmoi edit ~/.config/mise/config.toml` → `chezmoi apply` |
+
+Two constraints keep the guard from doing damage:
+
+- It **passes through silently in non-interactive shells** (`[[ -t 0 ]]`). Without a tty
+  `read` hits EOF and returns "no", which would turn the confirmation into a silent
+  failure for scripts, CI, and the `run_onchange_after_00-brew-bundle.sh` script itself.
+- It must be sourced **after** `eval "$(mise activate zsh)"` — mise's activate output
+  starts with `unset -f mise`, so any earlier wrapper is destroyed. The guard copies
+  mise's own function to `__chezmoi_guard_mise_orig` and delegates to it.
+
+Claude Code's Bash tool is non-interactive, so it never sees the prompt. It is covered
+separately by `permissions.ask` in `~/.claude/settings.json` (not chezmoi-managed).
