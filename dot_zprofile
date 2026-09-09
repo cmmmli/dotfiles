@@ -8,3 +8,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # mise: 非対話 shell (IDE のタスク, hook, GUI アプリ経由の起動) でもツールが見えるように shims を PATH に通す。
 # 対話 shell では ~/.zshrc の `mise activate zsh` が優先され、shims より前に実体のパスが入る
 eval "$(mise activate zsh --shims)"
+
+# Added by Obsidian
+export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
