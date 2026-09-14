@@ -49,6 +49,7 @@ All scripts are `after_` scripts (run once every file has been applied) and exec
 
 - `run_onchange_after_00-brew-bundle.sh.tmpl` - Trusts the taps listed in the Brewfile (`brew trust --tap`, required by Homebrew 6+) and runs `brew bundle` when `dot_Brewfile` changes (uses hash in comment)
 - `run_onchange_after_10-mise-install.sh.tmpl` - Runs `mise install` when `private_dot_config/mise/config.toml` changes (same hash trick)
+- `run_onchange_after_15-bat-cache.sh.tmpl` - Runs `bat cache --build` when the tokyonight tmTheme changes (bat only sees `~/.config/bat/themes/*.tmTheme` after a cache build)
 - `run_after_20-generate-completions.sh.tmpl` - Generates zsh completion cache after each apply
 
 Note: chezmoi applies entries in alphabetical order of target path, and `.chezmoiscripts/...` sorts before `.config/...`, so plain `run_onchange_` scripts would run before their config files are written. Keep them `after_`.
@@ -63,6 +64,8 @@ Note: chezmoi applies entries in alphabetical order of target path, and `.chezmo
 | `private_dot_config/mise/config.toml` | `~/.config/mise/config.toml` | mise: language runtimes and version-pinned CLIs (node, python, go, terraform, kubectl, ...) |
 | `private_dot_config/sheldon/plugins.toml` | `~/.config/sheldon/plugins.toml` | zsh plugin manager |
 | `private_dot_config/starship.toml` | `~/.config/starship.toml` | Prompt theme |
+| `private_dot_config/bat/config` | `~/.config/bat/config` | bat: LazyVim と同じ tokyonight moon テーマを指定 |
+| `private_dot_config/bat/themes/tokyonight_moon.tmTheme` | `~/.config/bat/themes/...` | tokyonight.nvim の `extras/sublime/` 由来。`bat cache --build` で登録 |
 | `private_dot_claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Claude Code: global instructions |
 | `private_dot_claude/executable_statusline-command.sh` | `~/.claude/statusline-command.sh` | Claude Code: status line renderer |
 | `private_dot_codex/AGENTS.md` | `~/.codex/AGENTS.md` | Codex: global instructions |

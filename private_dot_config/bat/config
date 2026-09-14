@@ -1,0 +1,3 @@
+# LazyVim と同じ配色 (tokyonight moon)。
+# themes/tokyonight_moon.tmTheme は tokyonight.nvim の extras/sublime から取得。
+--theme="tokyonight_moon"

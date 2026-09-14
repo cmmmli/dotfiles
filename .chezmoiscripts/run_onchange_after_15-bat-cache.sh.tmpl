@@ -1,0 +1,17 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# bat theme hash: {{ include "private_dot_config/bat/themes/tokyonight_moon.tmTheme" | sha256sum }}
+
+# bat は ~/.config/bat/themes/*.tmTheme をキャッシュにビルドして初めて認識する。
+# run_onchange_after_ なので themes/ が書かれた後に走る。
+if ! command -v bat >/dev/null 2>&1; then
+  echo "Warning: bat not found. Skipping bat cache build." >&2
+  exit 0
+fi
+
+echo "Building bat theme cache..."
+bat cache --build >/dev/null || {
+    echo "Warning: bat cache --build failed. Run it manually."
+    exit 0
+}
+{{ end -}}
