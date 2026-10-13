@@ -68,6 +68,7 @@ Note: chezmoi applies entries in alphabetical order of target path, and `.chezmo
 | `private_dot_config/bat/themes/tokyonight_moon.tmTheme` | `~/.config/bat/themes/...` | tokyonight.nvim の `extras/sublime/` 由来。`bat cache --build` で登録 |
 | `private_dot_claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Claude Code: global instructions |
 | `private_dot_claude/executable_statusline-command.sh` | `~/.claude/statusline-command.sh` | Claude Code: status line renderer |
+| `private_dot_claude/hooks/executable_ensure-gcloud-auth.sh` | `~/.claude/hooks/ensure-gcloud-auth.sh` | Claude Code: SessionStart hook that opens `gcloud auth login --update-adc` when credentials are expired |
 | `private_dot_codex/AGENTS.md` | `~/.codex/AGENTS.md` | Codex: global instructions |
 
 ## Coding Agent Config (`~/.claude`, `~/.codex`)
@@ -91,6 +92,18 @@ not done.
 
 Note `~/.claude/hooks/herdr-agent-state.sh` is installed by herdr itself, so it is not
 managed here either.
+
+Hook scripts are managed here, but their registration lives in the unmanaged
+`settings.json`, so it has to be added by hand on a new machine:
+
+```json
+"SessionStart": [{ "matcher": "startup|resume", "hooks": [{ "type": "command",
+  "command": "$HOME/.claude/hooks/ensure-gcloud-auth.sh", "timeout": 300 }] }]
+```
+
+`ensure-gcloud-auth.sh` decides with `gcloud config config-helper --force-auth-refresh`, not
+`gcloud auth print-access-token`: the latter succeeds on a cached access token even after the
+refresh token has been revoked by the reauth policy.
 
 ## Tool Management Policy
 
