@@ -87,8 +87,22 @@ preexec() {
 # config peco
 bindkey '^]' peco-src
 
+# ghq 管理外だが頻繁に移動する場所 (Obsidian vault など)
+PECO_SRC_EXTRA_DIRS=(
+  "$HOME/Documents/obsidian/komori"
+)
+
+# 存在するものだけを一覧に出す
+function peco-src-extra-dirs() {
+  local d
+  for d in $PECO_SRC_EXTRA_DIRS; do
+    [[ -d $d ]] && print -r -- $d
+  done
+  return 0
+}
+
 function peco-src() {
-  local src=$(ghq list --full-path | peco --query "$LBUFFER")
+  local src=$({ ghq list --full-path; peco-src-extra-dirs } | peco --query "$LBUFFER")
   if [ -n "$src" ]; then
     BUFFER="cd $src"
     zle accept-line
