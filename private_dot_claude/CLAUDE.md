@@ -21,6 +21,9 @@ When executing commands, never prepend comments (e.g., `# doing something`) befo
 - Auto-squash and auto-stash for rebase
 - Conflict style: zdiff3 (shows 3-way merge conflicts clearly)
 
+# Git Hooks
+- Set up Git hooks (pre-commit etc.) with lefthook, never husky or lint-staged. Follow the `setup-git-hooks` skill.
+
 # GitHub PR Rules
 - PR titles should be written in English according to conventional commits.
 - PR body should be written in Japanese.
