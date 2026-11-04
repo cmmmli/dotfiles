@@ -69,6 +69,7 @@ Note: chezmoi applies entries in alphabetical order of target path, and `.chezmo
 | `private_dot_claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Claude Code: global instructions |
 | `private_dot_claude/executable_statusline-command.sh` | `~/.claude/statusline-command.sh` | Claude Code: status line renderer |
 | `private_dot_claude/hooks/executable_ensure-gcloud-auth.sh` | `~/.claude/hooks/ensure-gcloud-auth.sh` | Claude Code: SessionStart hook that opens `gcloud auth login --update-adc` when credentials are expired |
+| `private_dot_claude/skills/setup-git-hooks/SKILL.md` | `~/.claude/skills/setup-git-hooks/SKILL.md` | Claude Code: hand-written skill for lefthook pre-commit hooks (replaces the husky-based `setup-pre-commit` from mattpocock/skills) |
 | `private_dot_codex/AGENTS.md` | `~/.codex/AGENTS.md` | Codex: global instructions |
 
 ## Coding Agent Config (`~/.claude`, `~/.codex`)
@@ -82,7 +83,7 @@ directories is deliberately left unmanaged:
 | `~/.codex/config.toml` | Codex appends `[projects."..."] trust_level` on every new directory, plus `marketplaces.last_updated`, `tui.model_availability_nux`, `desktop.*`. Same work-internal path leakage. |
 | `~/.codex/rules/default.rules` | An append-only approval log written by Codex, full of one-off command history. |
 | `~/.codex/auth.json` | Credentials. |
-| `sessions/`, `history.jsonl`, `*.sqlite`, `plugins/`, `cache/`, `skills/` | Runtime state, caches, and tool-installed content. |
+| `sessions/`, `history.jsonl`, `*.sqlite`, `plugins/`, `cache/`, `skills/` | Runtime state, caches, and tool-installed content. Skills installed by the `skills` CLI are recorded in `~/.agents/.skill-lock.json` and overwritten on update, so only hand-written skills are managed, one directory each under `private_dot_claude/skills/`. |
 | `~/.claude/commands/` | Slash commands belong to the repository they act on, so they live in that repo's own `.claude/commands/` — which also keeps private repository names out of this public repo. |
 
 chezmoi is one-way (source → target), so managing an app-rewritten file would make
