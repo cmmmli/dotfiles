@@ -97,16 +97,6 @@ if (( $+commands[eza] )); then
   alias lt='eza --icons --group-directories-first -T'  # tree表示
 fi
 
-# 確認付きの rm / cp / mv とグローバルエイリアスは、人が端末で打つときだけ有効にする。
-# Claude Code などのエージェントのシェル（tty なし、CLAUDECODE=1）では、
-# -i の確認が EOF で「いいえ」になって無言で失敗し、グローバルエイリアスは
-# コマンド中の単独の G や C を勝手に展開してしまうため。
-if [[ -t 0 && -z $CLAUDECODE ]]; then
-  alias rm='rm -i'
-  alias cp='cp -i'
-  alias mv='mv -i'
-fi
-
 alias mkdir='mkdir -p'
 
 alias docc='docker compose'
@@ -132,12 +122,4 @@ alias k='kubectl'
 
 # sudo の後のコマンドでエイリアスを有効にする
 alias sudo='sudo '
-
-# グローバルエイリアス（上の rm / cp / mv と同じ理由で、端末で打つときだけ）
-if [[ -t 0 && -z $CLAUDECODE ]]; then
-  alias -g L='| less -R'
-  alias -g G='| grep'
-  alias -g C='| pbcopy'
-  alias -g X='| xargs'
-fi
 
