@@ -97,10 +97,6 @@ if (( $+commands[eza] )); then
   alias lt='eza --icons --group-directories-first -T'  # tree表示
 fi
 
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-
 alias mkdir='mkdir -p'
 
 alias docc='docker compose'
@@ -126,10 +122,4 @@ alias k='kubectl'
 
 # sudo の後のコマンドでエイリアスを有効にする
 alias sudo='sudo '
-
-# グローバルエイリアス
-alias -g L='| less -R'
-alias -g G='| grep'
-alias -g C='| pbcopy'
-alias -g X='| xargs'
 
