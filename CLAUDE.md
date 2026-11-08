@@ -94,6 +94,13 @@ not done.
 Note `~/.claude/hooks/herdr-agent-state.sh` is installed by herdr itself, so it is not
 managed here either.
 
+Orca (used occasionally for reading code) installs its own hooks into `settings.json`
+and `~/.codex/hooks.json`, and replaces `statusLine` with its silent reporter. The hooks
+are left alone: they sit next to ours and exit at once outside an Orca pane. `statusLine`
+holds only one command, so it must point back to `$HOME/.claude/statusline-command.sh`,
+which relays the payload to `~/.orca/agent-hooks/claude-statusline.sh`. If Orca rewrites
+`statusLine` again, point it back.
+
 Hook scripts are managed here, but their registration lives in the unmanaged
 `settings.json`, so it has to be added by hand on a new machine:
 

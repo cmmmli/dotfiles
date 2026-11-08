@@ -2,6 +2,14 @@
 # Read JSON input from stdin
 input=$(cat)
 
+# Forward the payload to Orca when it is installed. Orca wants statusLine for itself,
+# but only one command can be registered, so this script stays registered and relays.
+# Orca's script exits at once outside an Orca pane and prints nothing.
+ORCA_STATUSLINE="$HOME/.orca/agent-hooks/claude-statusline.sh"
+if [ -x "$ORCA_STATUSLINE" ]; then
+    printf '%s' "$input" | /bin/sh "$ORCA_STATUSLINE" >/dev/null 2>&1
+fi
+
 CURRENT_DIR=$(echo "$input" | jq -r '.workspace.current_dir')
 MODEL_DISPLAY=$(echo "$input" | jq -r '.model.display_name')
 CONTEXT_SIZE=$(echo "$input" | jq -r '.context_window.context_window_size')
