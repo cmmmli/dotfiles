@@ -64,6 +64,7 @@ Note: chezmoi applies entries in alphabetical order of target path, and `.chezmo
 | `private_dot_config/mise/config.toml` | `~/.config/mise/config.toml` | mise: language runtimes and version-pinned CLIs (node, python, go, terraform, kubectl, ...) |
 | `private_dot_config/sheldon/plugins.toml` | `~/.config/sheldon/plugins.toml` | zsh plugin manager |
 | `private_dot_config/starship.toml` | `~/.config/starship.toml` | Prompt theme |
+| `private_dot_config/nvim/` | `~/.config/nvim/` | Neovim: [LazyVim starter](https://github.com/LazyVim/starter) ベース。自分の設定は `lua/config/*.lua` と `lua/plugins/` に書く。`lazy-lock.json` は lazy.nvim が更新のたびに書き換えるので管理しない |
 | `private_dot_config/bat/config` | `~/.config/bat/config` | bat: LazyVim と同じ tokyonight moon テーマを指定 |
 | `private_dot_config/bat/themes/tokyonight_moon.tmTheme` | `~/.config/bat/themes/...` | tokyonight.nvim の `extras/sublime/` 由来。`bat cache --build` で登録 |
 | `private_dot_claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | Claude Code: global instructions |
